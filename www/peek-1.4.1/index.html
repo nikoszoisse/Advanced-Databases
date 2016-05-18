@@ -1,0 +1,411 @@
+﻿<!doctype html>
+ <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" ><!--Prevent IE using compatibility mode on local or intranet pages. Do not put scripts before this line.-->
+  <meta name="viewport" content="width=device-width, user-scalable=yes"><!--Mobile device scaling-->
+  <meta charset="UTF-8">
+  <title>Peek - a chart library based on D3.js</title>
+
+  <!--load stylesheets first (rationale: https://developers.google.com/speed/docs/best-practices/rtt#PutStylesBeforeScripts)-->
+  <link rel="stylesheet" href="require/framework.min.css" type="text/css" />
+  <link rel="stylesheet" href="require/highlight.min.css" type="text/css" />
+  <link rel="stylesheet" href="peek.css" type="text/css" />
+
+<style>
+
+header > div > a div{
+  height: 42px; 
+  line-height: 42px; 
+  padding-left: 67px; /*width+25*/
+}
+
+#banner {
+  color: #385691;
+  font-weight: bold;
+  padding-top: 30px;
+  background-color: #f7f7f7;
+  box-shadow: inset 0px 5px 5px 0px #e7e7e7;
+}
+
+#banner img {
+  padding: 25px 0 25px 0;
+}
+
+#banner-buttons {
+  background-color: #f7f7f7;
+  padding: 20px 0 20px 0;
+  background-color: #999;
+}
+
+.spaced {
+  margin-right: 15px;
+}
+
+.heading-text {
+  font-size:16px;
+  text-align:center;
+}
+
+.segment {
+  border-bottom: 2px solid #385691;
+  padding: 20px 0 20px 0;
+}
+
+.features, .quick-howto {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.features li {
+  vertical-align: top;
+  display: inline-block;
+  width: 220px;
+  margin: 10px;
+
+}
+
+.features li span {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.features li h2 {
+  margin: 0;
+  padding: 0 0 3px 0;
+  font-size: 14px;
+  border: none;
+}
+
+.features li p {
+  padding-top: 5px;
+  margin: 0;
+
+}
+
+#howto {
+  background-color: #333;
+  box-shadow: inset 0px 5px 5px 0px #4b4b4b;
+}
+
+#browser-warning {
+  background-color: #385691;
+}
+
+#browser-warning h1, #browser-warning .warning-intro, #howto h1, #howto p, #howto ul {
+  color: white;
+}
+
+#howto h1, #browser-warning h1 {
+  border: none;
+}
+
+.quick-howto li {
+  vertical-align: top;
+  display: inline-block;
+  width: 300px;
+  margin: 10px;
+}
+
+.quick-howto li span {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.quick-howto li h2 {
+  margin: 0;
+  padding: 0 0 3px 0;
+  font-size: 16px;
+  border: none;
+  color: white;
+}
+
+.quick-howto li a {
+  color: white;
+}
+
+.quick-howto li p {
+  padding-top: 5px;
+  margin: 0;
+}
+
+.quick-howto .w-icon {
+  width: 50px; height: 50px;
+}
+
+.quick-howto svg {
+  fill: white;
+}
+
+#example {
+  display: table;
+  width: 100%;
+  font-weight: normal;
+  margin: 50px 0 0px 0;
+}
+
+#example-code {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.topology {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #666;
+  padding: 30px;
+  margin: 0;
+  background-color: #eee;
+}
+
+.topology span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+  color: white;
+  background-color: #666;
+}
+
+</style>
+
+  <!--load scripts second-->
+  <script src="require/framework.min.js"></script>
+  <script src="require/framework.icons.js"></script>
+  <script src="require/highlight.min.js"></script>
+  <script src="require/d3.min.js"></script>
+  <script src="peek.js"></script>
+  <script src="docs/example.js"></script>
+
+  <!--inline scripts last-->
+<script>
+
+
+ $(document).ready(function() {
+
+  var data = getFirstGroupData();
+  var chart = new Cartesian("#chart");
+  chart.data.isStacked = true;
+  chart.plot.width = 600;
+  chart.plot.height = 315;
+  chart.lines.interpolation = 'cardinal';
+  chart.areas.interpolation = 'cardinal';
+  chart.areas.visible = true;
+  chart.areas.hasOpacity = true;
+  //------------------------------------------------
+  chart.plot.showTitle = false;
+  chart.plot.showXLabel = false;
+  chart.plot.showYLabel = false;
+  //------------------------------------------------
+  chart.draw(data);
+
+  //instantiate an svg injector to show SVG icons
+  var injector = new svgInject();
+  injector.inject();//or use injector.inject('#foo') to only inject inside the matching elements
+
+  hljs.initHighlightingOnLoad();
+
+});
+</script>
+
+ </head>
+
+ <body>
+
+ <header>
+ <div class="w-fixed-width">
+	<a href="./index.html">
+		<div style="background-image:url('docs/images/logo.png');">
+			Peek - a chart library based on D3.js<span style="font-weight:normal;"> (version 1.4.1)</span>
+		</div>
+	</a>
+	<div>
+		<a href="docs/reference.html" class="w-button-link w-colored w-small">Reference Guide</a>
+		<a href="docs/release-notes.html" class="w-button-link w-colored w-small">Release Notes</a>
+	</div>
+ </div>
+ </header>
+
+ <div id="banner" class="segment"><div class="w-fixed-width">
+   <h1 class="w-massive w-center w-no-underline">Attractive charts for web applications.</h1>
+   <div id="example" class="w-clear-after">
+    <div id="chart"></div>
+    <div id="example-code">
+<pre><code>var chart = new Cartesian("#chart");
+chart.data.isStacked = true;
+chart.plot.width = 600;
+chart.plot.height = 315;
+chart.lines.interpolation = 'cardinal';
+chart.areas.interpolation = 'cardinal';
+chart.areas.visible = true;
+chart.areas.hasOpacity = true;
+chart.draw(data);</code></pre>
+   </div>
+   </div>   
+ </div></div>
+ 
+ <div id="banner-buttons" class="segment"><div class="w-fixed-width">
+  <span class="w-center">
+  <a href="https://github.com/mtmacdonald/peek/releases" class="w-button-link w-colored w-large spaced">Download</a>
+  <a href="https://github.com/mtmacdonald/peek/issues" class="w-button-link w-dark">Report Issues</a>
+  </span>
+ </div></div>
+ <section>
+
+<div class="segment"><div class="w-fixed-width">
+
+<p class="heading-text">
+ <strong>Peek</strong> is a <strong>an object-oriented chart library</strong> for web applications, based on <a href="http://d3js.org/">D3.js</a>. 
+</p>
+
+<ul class="features">
+<li>
+  <h2><span class="w-icon" data-name="grid"></span><span>Object-oriented</span></h2>
+  <p>The benefits of <a href="http://d3js.org/">D3.js</a>, but with easier, configurable, reusable chart objects.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="stats_bars"></span><span>Many chart types</span></h2>
+  <p>Supports scatter, line, area, bar, pie, and donut charts in multiple orientations and configurations.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="levels"></span><span>Multiple series</span></h2>
+  <p>Display and compare multiple data series with stacked and grouped charts.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="arrow_resize"></span><span>Automatic scaling</span></h2>
+  <p>Scales and axis tick labels are handled automatically, with input data maxima detection.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="monitor"></span><span>Interpolation</span></h2>
+  <p>Optional best-fit curves and line smoothing with 
+    <a href="http://nickqizhu.github.io/d3-cookbook/src/chapter7/line-interpolation.html">D3 line interpolation</a>.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="archive"></span><span>JSON data format</span></h2>
+  <p>Standardised data inputs allow the same dataset to easily be displayed in multiple chart types.
+</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="compose"></span><span>Labelling</span></h2>
+  <p>Support for configurable chart titles, axis labels, and legends.</p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="flash"></span><span>Interactive</span></h2>
+  <p>Optionally show data points, with interactive tooltips for displaying values.</p>
+</li>
+</ul>
+
+<p class="heading-text">Peek provides an <strong>HTML5</strong>, <strong>CSS3</strong> and <strong>JavaScript</strong> chart library for any modern web application.</p>
+
+ </div></div>
+
+<div id="howto" class="segment"><div class="w-fixed-width">
+<h1>Getting started</h1>
+<p>Peek is server-side agnostic and will work with any backend framework.</p>
+
+<ul class="quick-howto">
+<li>
+  <h2><span class="w-icon" data-name="arrow_down_a"></span><span>Download the library</span></h2>
+  <p>
+    <a href="https://github.com/mtmacdonald/peek/releases">Download</a> or clone a copy of the library.
+  </p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="compose"></span><span>Copy from examples</span></h2>
+  <p>
+    Copy and paste from the <a href="docs/reference.html">examples</a>.
+  </p>
+</li>
+<li>
+  <h2><span class="w-icon" data-name="gear_a"></span><span>Customize and publish</span></h2>
+  <p>
+    Attach to any webpage, and publish.
+  </p>
+</li>
+</ul>
+
+<p>The key point is to attach the library CSS and JavaScript files:</p>
+
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;peek.css&quot; type=&quot;text/css&quot; /&gt;</code></pre>
+
+<pre><code>&lt;script src=&quot;require/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;peek.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+</div></div>
+
+<div id="customisation" style="padding-top:20px;"><div class="w-fixed-width">
+<h1>Overview</h1>
+
+<p>The best way to get an overview is to look at the <a href="docs/reference.html">examples</a>.
+
+<h2>Class list</h2>
+
+<p>User classes are accessed directy. Internal classes are only accessed indirectly, as a child members of a user class.</p>
+
+<ul>
+ <li><strong>User classes:</strong></li>
+  <ul>
+   <li><strong>Cartesian</strong> - creates a Cartesian (xy), time-series chart of any type</li>
+   <li><strong>Radial</strong> - creates a radial chart, e.g. pie chart</li>
+   <li><strong>HorizontalBar</strong> - creates a horizontal bar chart</li>
+   <li><strong>Legend</strong> - draws a chart legend with color/label key</li>
+  </ul>
+  <li><strong>Internal classes:</strong></li>
+  <ul>
+     <li><strong>Plot</strong> - plot handler, including title, legends, and SVG for all charts</li>
+     <li><strong>Axes</strong></li>
+     <ul>
+      <li><strong>Axis</strong> - axis handler for all charts</li>
+     </ul>
+     <li><strong>Data</strong> - a common data input handler for Cartesian charts</li>
+     <li><strong>Lines</strong> - line handler for Cartesian charts</li>
+     <li><strong>Areas</strong> - shaded area handler for Cartesian charts</li>
+     <li><strong>Points</strong> - point handler, including tooltips for Cartesian charts</li>        
+     <li><strong>Bars</strong> - bar handler for Cartesian charts</li>
+  </ul>
+</ul>
+
+<h2>Chart topology</h2>
+
+<p>Legends, titles, and labels (except axis tick labels) are rendered as HTML elements, not SVG elements. This is 
+primarily because HTML elements handle text overflow better. The chart topology, with CSS class names, is shown below:
+</p>
+
+<div class="topology"><span>.pk-chart</span>
+  <div class="topology"><span>.pk-plot</span>
+    <div class="topology" style="height: 365px; vertical-align: top;"><span>.pk-yLabelContainer</span>
+      <div class="topology" style="width: 80px;"><span>.pk-yLabel</span>
+      </div>
+    </div>
+    <div class="topology"><span>.pk-mainContainer</span>
+      <div class="topology" style="width: 262px;"><span>.pk-title</span>
+      </div><br/><br/>
+      <div class="topology"><span>.pk-svgContainer</span>
+        <div class="topology" style="width: 200px;"><span>svg</span>
+        </div>
+      </div><br/><br/>
+      <div class="topology" style="width: 262px;"><span>.pk-xLabel</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="topology" style="height: 489px; vertical-align: top;"><span>.pk-legendContainer</span>
+  <div class="topology" style="width: 80px;"><span>.pk-legend</span>
+  </div>
+</div>
+
+</div></div>
+
+ </section> 
+
+ <footer>
+	<div><p class="w-fixed-width">&nbsp;</p></div>
+	<div class="w-fixed-width">
+    <p>&copy; 2015 <a href="https://github.com/mtmacdonald/peek">Mark Macdonald</a></p>
+		<p><a href="LICENSE">MIT license</a></p>
+	</div>
+ </footer>
+ 
+ </body>
+</html>

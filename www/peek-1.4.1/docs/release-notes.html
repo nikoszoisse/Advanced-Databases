@@ -1,0 +1,140 @@
+﻿<!doctype html>
+<html>
+ <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" ><!--Prevent IE using compatibility mode on local or intranet pages. Do not put scripts before this line.-->
+  <meta name="viewport" content="width=device-width, user-scalable=yes"><!--Mobile device scaling-->
+  <meta charset="UTF-8">
+  <title>Peek - a chart library based on D3.js</title>
+
+  <!--load stylesheets first (rationale: https://developers.google.com/speed/docs/best-practices/rtt#PutStylesBeforeScripts)-->
+  <link rel="stylesheet" href="../require/framework.min.css" type="text/css" />
+  <link rel="stylesheet" href="../peek.css" type="text/css" /> 
+ 
+<style>
+header > div > a div{
+  height: 42px; 
+  line-height: 42px; 
+  padding-left: 67px; /*width+25*/
+}
+</style>
+
+  <!--load scripts second-->
+  <script src="../require/framework.min.js"></script>
+  <script src="../require/framework.icons.js"></script>
+
+  <!--inline scripts last-->
+ </head>
+
+ <body>
+
+ <header>
+ <div class="w-fixed-width">
+	<a href="../index.html">
+    <div style="background-image:url('images/logo.png');">
+      Peek - a chart library based on D3.js<span style="font-weight:normal;"> (version 1.4.1)</span>
+    </div>
+	</a>
+ </div>
+ </header>
+
+ <section>
+ <div class="w-fixed-width">
+
+<h1>Release Notes</h1>
+
+<h2>1.4.1 released 12/02/2016</h2>
+
+<ul>
+ <li>Fixed a defect where labels were not showing for horizontal bar charts in Internet Explorer</li>
+</ul>
+
+<h2>1.4.0 released 01/12/2015</h2>
+
+<ul>
+ <li>Added support for charts with linear x-axis scales</li>
+ <li>Added support for bar charts with ordinal x-axis scales</li>
+</ul>
+
+<h2>1.3.1 released 19/11/2015</h2>
+
+<ul>
+ <li>Fixed a defect in the maxima detection when dual y-axes are enabled</li>
+</ul>
+
+<h2>1.3.0 released 19/11/2015</h2>
+
+<ul>
+ <li>Added support for dual y-axes and dual y-scales</li>
+</ul>
+
+<h2>1.2.0 released 11/11/2015</h2>
+
+<ul>
+ <li>Added support for bar charts with multiple textures (requires <a href="http://riccardoscalco.github.io/textures">textures.js</a>)</li>
+ <li>Bar chart spacing can now be set as a public property</li>
+ <li>Legend width can now be set as a public property</li>
+ <li>The plot object in radial and horizontal bar charts is now a public property</li>
+ <li>Value stacking is only performed when stacking is enabled</li>
+ <li>Defect fix: moved some logo positioning styles out of peek.css</li>
+ <li>Radial charts now support displaying axis labels</li>
+ <li>Radial charts are now sorted by series, not size</li>
+ <li>Added error catching for radial charts when all input values are zero</li>
+</ul>
+
+<h2>1.1.0 released 17/03/2015</h2>
+
+<ul>
+ <li>New time-series chart types</li>
+  <ul>
+   <li>Scatter charts</li>
+   <li>Area charts</li>
+   <li>Stacked area charts</li>
+   <li>Bar charts</li>
+   <li>Grouped bar charts</li>
+   <li>Stacked bar charts</li>
+   <li>Grouped stacked bar charts</li>
+  </ul>
+  <li>New radial chart types</li>
+  <ul>
+     <li>Pie charts</li>
+  </ul>
+  <li>Charts now reuse common objects (plot, grid, axes, labels, legend)</li>
+  <li>Uniform data format for all time-series charts</li>
+  <li>Common data handler for all time-series charts</li>
+  <li>Added support for chart title</li>
+  <li>Added support for chart axis labels</li>
+  <li>Added support for fill transparency/opacity</li>
+  <li>Line widths and borders are now configurable</li>
+  <li>Restyled the point tooltip</li>
+  <li>Added a user guide</li>
+  <li>Improved configurability</li>
+  <li>Fixed draw layer ordering (grid, then series, then axis, then points)</li>
+  <li>Fixed legend key defects (key now uses SVG, solving print and display issues)</li>
+  <li>Fixed an SVG margin defect where labels and points could sometimes get truncated</li>
+ </ul>
+
+ <h2>1.0.0 released 22/09/2014</h2>
+
+ <ul>
+  <li>Time-series line charts</li>
+  <li>Time-series stacked bar charts</li>
+  <li>Line chart interpolation</li>
+  <li>Horizontal bar charts</li>
+  <li>Donut charts</li>
+  <li>Legends</li>
+ </ul>
+
+ </div>
+ </section> 
+
+ <footer>
+	<div><p class="w-fixed-width">&nbsp;</p></div>
+	<div class="w-fixed-width">
+		<p>&copy; 2015 <a href="https://github.com/mtmacdonald/peek">Mark Macdonald</a></p>
+    <p><a href="../LICENSE">MIT license</a></p>
+	</div>
+ </footer>
+ 
+ </body>
+</html>
+

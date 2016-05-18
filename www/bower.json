@@ -10,6 +10,8 @@
   "moduleType": [],
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "d3": "~3.5.16",
+    "multiselect": "^0.9.12"
   }
 }
